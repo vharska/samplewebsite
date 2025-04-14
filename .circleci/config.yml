@@ -1,1 +1,110 @@
+version: 2.1
+
+orbs:
+  aws-ecr: circleci/aws-ecr@8.2.1
+  aws-cli: circleci/aws-cli@4.0.0
+  terraform: circleci/terraform@3.2.1
+
+jobs:
+  build-and-push:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - setup_remote_docker
+      - aws-ecr/build-and-push-image:
+          repo: harshitha-site
+          tag: latest
+          region: AWS_REGION
+          path: .
+
+  deploy-terraform:
+    docker:
+      - image: hashicorp/terraform:light
+    steps:
+      - checkout
+      - run:
+          name: Terraform Init
+          command: |
+            cd terraform
+            terraform init
+      - run:
+        name: Terraform Plan
+        command: |
+          cd terraform
+          terraform plan
+      - run:
+          name: Terraform Apply
+          command: |
+            cd terraform
+            terraform apply -auto-approve
+
+workflows:
+  build-deploy:
+    jobs:
+      - build-and-push:
+        filters:
+          branches:
+            only: main
+      - deploy-terraform:
+          filters:
+            branches:
+              only: main
+          requires:
+            - build-and-push
+
+
+
+
+
+
+
+
+
+
+# version: 2.1
+
+# executors:
+#   docker-executor:
+#     docker:
+#       - image: cimg/aws:2023.12
+
+# jobs:
+#   build-and-deploy:
+#     executor: docker-executor
+#     environment:
+#       AWS_REGION: us-west-2
+#     steps:
+#       - checkout
+
+#       - run:
+#           name: Install AWS CLI v2
+#           command: |
+#             sudo apt update
+#             sudo apt install -y unzip
+#             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+#             unzip awscliv2.zip
+#             sudo ./aws/install
+#             aws --version
+
+#       - run:
+#           name: Authenticate to ECR
+#           command: |
+#             aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin <your-ecr-url>
+
+#       - run:
+#           name: Build Docker image
+#           command: |
+#             docker build -t harshitha-site .
+
+#       - run:
+#           name: Tag and push image
+#           command: |
+#             docker tag harshitha-site:latest <your-ecr-url>:latest
+#             docker push <your-ecr-url>:latest
+
+#       - run:
+#           name: Update ECS Service
+#           command: |
+#             aws ecs update-service --cluster harshitha-cluster --service harshitha-service --force-new-deployment
 
