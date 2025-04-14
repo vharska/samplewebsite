@@ -49,13 +49,13 @@ workflows:
     jobs:
       - deploy-terraform:
           context: samplesite
-          # requires:
-          #   - build-and-push
           filters:
             branches:
               only: main
       - build-and-push:
           context: samplesite
+          requires:
+            - deploy-terraform
           filters:
             branches:
               only: main
