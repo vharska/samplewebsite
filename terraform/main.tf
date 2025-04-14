@@ -3,7 +3,7 @@ provider "aws" {
 # profile= "harshitha"
 }
 
-resource "aws_ecr_repository" "banana" {
-  name = "my-app"
+resource "aws_ecr_repository" "apple" {
+  name = "mywebsite"
 }
  
