@@ -16,9 +16,13 @@ jobs:
           repo: my-app
           tag: latest
           region: us-east-1
-          push_image: true
-          path: .
-          dockerfile: ./Dockerfile
+          path: .  # Assuming Dockerfile is at root
+          dockerfile: Dockerfile  # Explicitly specify Dockerfile if needed
+          auth:
+            - aws-cli/setup:
+                aws-access-key-id: AWS_ACCESS_KEY_ID
+                aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+                region: us-east-1
 
   deploy-terraform:
     docker:
