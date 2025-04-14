@@ -16,8 +16,9 @@ jobs:
           repo: my-app
           tag: latest
           region: us-east-1
+          push_image: true
           path: .
-          dockerfile: Dockerfile
+          dockerfile: ./Dockerfile
 
   deploy-terraform:
     docker:
