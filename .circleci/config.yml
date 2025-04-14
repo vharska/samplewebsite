@@ -20,6 +20,7 @@ jobs:
           repo: my-app
           tag: latest
           region: us-east-1
+          account_id: 887329216501
           dockerfile: Dockerfile
           path: .
 
