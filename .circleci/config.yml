@@ -48,6 +48,7 @@ workflows:
             branches:
               only: main
       - deploy-terraform:
+          context: samplesite
           requires:
             - build-and-push
           filters:
