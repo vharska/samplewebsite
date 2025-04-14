@@ -13,7 +13,7 @@ jobs:
       - checkout
       - setup_remote_docker
       - aws-ecr/build-and-push-image:
-          repo: my-app
+          repo: my-webapp
           tag: latest
           region: us-east-1
           path: .
