@@ -16,7 +16,8 @@ jobs:
           repo: my-app
           tag: latest
           region: us-east-1
-          path: ./Dockerfile
+          path: .
+          dockerfile: Dockerfile
 
   deploy-terraform:
     docker:
