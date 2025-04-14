@@ -15,7 +15,7 @@ jobs:
       - aws-ecr/build-and-push-image:
           repo: harshitha-site
           tag: latest
-          region: AWS_REGION
+          region: us-east-1
           path: .
 
   deploy-terraform:
