@@ -1,6 +1,6 @@
 provider "aws" {
   region = "us-east-1"
-  profile= "harshitha"
+# profile= "harshitha"
 }
 
 resource "aws_ecr_repository" "banana" {
