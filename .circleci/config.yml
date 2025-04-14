@@ -11,18 +11,16 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
-      - setup_remote_docker
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          region: us-east-1
       - aws-ecr/build-and-push-image:
           repo: my-app
           tag: latest
           region: us-east-1
           path: .  # Assuming Dockerfile is at root
           dockerfile: Dockerfile  # Explicitly specify Dockerfile if needed
-          auth:
-            - aws-cli/setup:
-                aws-access-key-id: AWS_ACCESS_KEY_ID
-                aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-                region: us-east-1
 
   deploy-terraform:
     docker:
