@@ -13,10 +13,10 @@ jobs:
       - checkout
       - setup_remote_docker
       - aws-ecr/build-and-push-image:
-          repo: my-webapp
+          repo: my-app
           tag: latest
           region: us-east-1
-          path: .
+          path: ./Dockerfile
 
   deploy-terraform:
     docker:
