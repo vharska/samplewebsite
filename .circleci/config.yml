@@ -29,10 +29,10 @@ jobs:
             cd terraform
             terraform init
       - run:
-        name: Terraform Plan
-        command: |
-          cd terraform
-          terraform plan
+          name: Terraform Plan
+          command: |
+            cd terraform
+            terraform plan
       - run:
           name: Terraform Apply
           command: |
@@ -43,16 +43,15 @@ workflows:
   build-deploy:
     jobs:
       - build-and-push:
-        filters:
-          branches:
-            only: main
-      - deploy-terraform:
           filters:
             branches:
               only: main
+      - deploy-terraform:
           requires:
             - build-and-push
-
+          filters:
+            branches:
+              only: main
 
 
 
