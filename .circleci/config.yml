@@ -47,11 +47,6 @@ jobs:
 workflows:
   build-deploy:
     jobs:
-      - build-and-push:
-          context: samplesite
-          filters:
-            branches:
-              only: main
       - deploy-terraform:
           context: samplesite
           requires:
@@ -59,6 +54,12 @@ workflows:
           filters:
             branches:
               only: main
+      - build-and-push:
+          context: samplesite
+          filters:
+            branches:
+              only: main
+
 
 
 
